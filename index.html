@@ -77,7 +77,32 @@
     transition: color 0.2s, background 0.2s;
   }
 
-  .nav-cats a:hover {
+  .nav-itw-link {
+  color: rgba(255,255,255,0.5) !important;
+  border-left: 1px solid rgba(255,255,255,0.15);
+  padding-left: 14px !important;
+  margin-left: 6px;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+}
+.nav-itw-link:hover {
+  color: rgba(255,255,255,0.85) !important;
+}
+.nav-book-btn {
+  background: var(--gold) !important;
+  color: var(--navy) !important;
+  padding: 5px 14px !important;
+  border-radius: 2px;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.06em !important;
+  transition: background 0.2s !important;
+}
+.nav-book-btn:hover {
+  background: var(--gold-l) !important;
+  color: var(--navy) !important;
+}
+.nav-cats a:hover {
     color: var(--gold-lt);
     background: rgba(255,255,255,0.06);
   }
@@ -248,13 +273,6 @@
     font-weight: 600;
     margin-bottom: 4px;
     color: #fff;
-  }
-
-  .ambassador-card .amb-email {
-    font-size: 11px;
-    color: var(--gold-lt);
-    margin-bottom: 14px;
-    font-weight: 400;
   }
 
   .ambassador-card p {
@@ -515,7 +533,7 @@
 
 <!-- Nav -->
 <nav>
-  <a class="nav-logo" href="#">Aetas <span>Collective</span></a>
+  <a class="nav-logo" href="https://itw.aetaspartners.com">Aetas <span>Collective</span></a>
   <ul class="nav-cats">
     <li><a href="#ambassadors">Ambassadors</a></li>
     <li><a href="#benefits">Benefits</a></li>
@@ -526,6 +544,8 @@
     <li><a href="#performance">Performance</a></li>
     <li><a href="#tech">Tech &amp; AI</a></li>
     <li><a href="#about">About Aetas</a></li>
+    <li><a href="https://itw.aetaspartners.com" class="nav-itw-link">&#8592; Aetas ITW</a></li>
+    <li><a href="https://links.aetas-partners.com/widget/booking/IacdM2cW2bnLm0pK7Jty" target="_blank" class="nav-book-btn">Book a Meeting</a></li>
   </ul>
 </nav>
 
@@ -568,19 +588,16 @@
 
       <div class="ambassador-card">
         <h3>Nick McCall</h3>
-        <p class="amb-email">mccallnick@aol.com</p>
         <p>Nick has thirty years of senior leadership across international financial services, private wealth management, and global relationship development, with a career spanning Credit Suisse, Merrill Lynch, Clariden Leu, and Falcon Private Wealth. Co-founder of the UK chapter of the Financial Executives Networking Group, Nick brings a highly connected network of business leaders, senior executives, and professional advisers to the Aetas ITW programme.</p>
       </div>
 
       <div class="ambassador-card">
         <h3>Anne Fergusson</h3>
-        <p class="amb-email">&nbsp;</p>
         <p>Anne is a Chartered Accountant (Scottish) with twenty years across professional services, wealth management, and early-stage investment. Former head of PwC's Turnaround Panel in London and Development Director at Mattioli Woods, now focused on mentoring high-potential businesses and developing the Scottish Design Fund. Anne brings boardroom credibility and a broad network of business leaders and professional advisers to the Aetas ITW programme.</p>
       </div>
 
       <div class="ambassador-card">
         <h3>Jonathan Howard</h3>
-        <p class="amb-email">jonathanhoward45@icloud.com</p>
         <p>Jonathan is a Chartered Financial Planner with over 30 years' experience advising individuals and business owners. He is CEO of Richmond House Wealth Management, part of the IWP group, having previously been Managing Director of Carnelian Capital Management. Jonathan works closely with clients on long-term planning and has been appointed as Trustee and Executor on a number of estates. He brings strategic leadership and deep client insight to support sustainable growth and continuity.</p>
       </div>
 
