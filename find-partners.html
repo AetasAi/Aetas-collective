@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Find Your Partners — Aetas Collective</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  const EMAILJS_PUBLIC_KEY_FP  = "T-OvAY8-q_r_P4tAA";
+  const EMAILJS_SERVICE_ID_FP  = "service_dztbuyl";
+  const EMAILJS_TEMPLATE_ID_FP = "template_partners"; // ← create this template in EmailJS
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -1117,6 +1123,8 @@ function calculateResults() {
 function showResults(matches, name, company, email, jobTitle, answers) {
   document.getElementById('form-section').style.display = 'none';
   document.getElementById('results').style.display = 'block';
+  // Send results email
+  sendPartnerEmail(name, email, company, jobTitle, matches);
 
   document.getElementById('results-intro').innerHTML =
     `<strong>${name} — ${company}</strong><br>Based on your responses, we have identified <strong>${matches.length} Collective partners</strong> that are most relevant to where your organisation is right now. Each card below explains why they were matched to you and gives you a direct way to get in touch.`;
@@ -1184,6 +1192,54 @@ function showResults(matches, name, company, email, jobTitle, answers) {
   document.getElementById('progress-fill').style.width = '100%';
   document.getElementById('prog-label').textContent = 'Complete';
   document.getElementById('prog-counter').textContent = 'Results ready';
+}
+
+
+// ── Send partner finder results via EmailJS ───────────────────────────────────
+function sendPartnerEmail(name, email, company, jobTitle, matches) {
+  emailjs.init(EMAILJS_PUBLIC_KEY_FP);
+
+  const firstName = name.split(' ')[0] || name;
+
+  // Build partner summary text
+  const partnerLines = matches.map((p, i) => {
+    const labels = ['Your top match', 'Strong match', 'Also relevant', 'Consider', 'Worth exploring'];
+    return (labels[i] || 'Match') + ': ' + p.name + ' (' + p.category + ')' +
+           (p.contact ? ' - Contact: ' + p.contact : '') +
+           (p.email ? ' - ' + p.email : '');
+  }).join('\n');
+
+  const partner1 = matches[0] ? matches[0].name + (matches[0].contact ? ' - ' + matches[0].contact : '') + (matches[0].email ? ' (' + matches[0].email + ')' : '') : '';
+  const partner2 = matches[1] ? matches[1].name + (matches[1].contact ? ' - ' + matches[1].contact : '') + (matches[1].email ? ' (' + matches[1].email + ')' : '') : '';
+  const partner3 = matches[2] ? matches[2].name + (matches[2].contact ? ' - ' + matches[2].contact : '') + (matches[2].email ? ' (' + matches[2].email + ')' : '') : '';
+  const partner4 = matches[3] ? matches[3].name + (matches[3].contact ? ' - ' + matches[3].contact : '') + (matches[3].email ? ' (' + matches[3].email + ')' : '') : '';
+  const partner5 = matches[4] ? matches[4].name + (matches[4].contact ? ' - ' + matches[4].contact : '') + (matches[4].email ? ' (' + matches[4].email + ')' : '') : '';
+
+  const cat1 = matches[0]?.category || '';
+  const cat2 = matches[1]?.category || '';
+  const cat3 = matches[2]?.category || '';
+  const why1 = matches[0]?.topTrigger ? WHY[matches[0].topTrigger] || '' : '';
+  const why2 = matches[1]?.topTrigger ? WHY[matches[1].topTrigger] || '' : '';
+  const why3 = matches[2]?.topTrigger ? WHY[matches[2].topTrigger] || '' : '';
+
+  emailjs.send(EMAILJS_SERVICE_ID_FP, EMAILJS_TEMPLATE_ID_FP, {
+    to_name:     firstName,
+    to_email:    email,
+    company:     company,
+    job_title:   jobTitle || '',
+    match_count: matches.length,
+    partner_1:   partner1,  partner_cat_1: cat1,  why_1: why1,
+    partner_2:   partner2,  partner_cat_2: cat2,  why_2: why2,
+    partner_3:   partner3,  partner_cat_3: cat3,  why_3: why3,
+    partner_4:   partner4,
+    partner_5:   partner5,
+    all_partners: partnerLines,
+    cc_email:    'matthew.steiner@aetas-partners.com'
+  }).then(() => {
+    console.log('Partner finder email sent');
+  }).catch(err => {
+    console.error('EmailJS error:', err);
+  });
 }
 
 // Initialise
